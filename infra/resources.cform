@@ -13,43 +13,43 @@
 
       "CloudFrontIdentityKey": {
         "Type": "String",
-        "Default": "aws-cloudformation-cloudfront-identity/latest.zip"
+        "Default": "aws-cloudformation-cloudfront-identity/1.0.0.zip"
       },
       "CognitoIdentityPoolKey": {
         "Type": "String",
-        "Default": "aws-cloudformation-cognito-identitypool/latest.zip"
+        "Default": "aws-cloudformation-cognito-identitypool/1.0.0.zip"
       },
       "CognitoIdentityPoolRolesKey": {
         "Type": "String",
-        "Default": "aws-cloudformation-cognito-identitypoolroles/latest.zip"
+        "Default": "aws-cloudformation-cognito-identitypoolroles/1.0.0.zip"
       },
       "CognitoUserPoolKey": {
         "Type": "String",
-        "Default": "aws-cloudformation-cognito-userpool/latest.zip"
+        "Default": "aws-cloudformation-cognito-userpool/1.0.0.zip"
       },
       "CognitoUserPoolClientKey": {
         "Type": "String",
-        "Default": "aws-cloudformation-cognito-userpoolclient/latest.zip"
+        "Default": "aws-cloudformation-cognito-userpoolclient/1.0.0.zip"
       },
       "CognitoUserPoolCustomAttributesKey": {
         "Type": "String",
-        "Default": "aws-cloudformation-cognito-userpoolcustomattributes/latest.zip"
+        "Default": "aws-cloudformation-cognito-userpoolcustomattributes/1.0.0.zip"
       },
       "DynamoDBItemKey": {
         "Type": "String",
-        "Default": "aws-cloudformation-dynamodb-item/latest.zip"
+        "Default": "aws-cloudformation-dynamodb-item/1.0.0.zip"
       },
       "ElasticTranscoderPipelineKey": {
         "Type": "String",
-        "Default": "aws-cloudformation-elastic-transcoder-pipeline/latest.zip"
+        "Default": "aws-cloudformation-elastic-transcoder-pipeline/1.0.0.zip"
       },
       "ElasticTranscoderPresetKey": {
         "Type": "String",
-        "Default": "aws-cloudformation-elastic-transcoder-preset/latest.zip"
+        "Default": "aws-cloudformation-elastic-transcoder-preset/1.0.0.zip"
       },
       "S3UploaderKey": {
         "Type": "String",
-        "Default": "aws-cloudformation-s3-uploader/latest.zip"
+        "Default": "aws-cloudformation-s3-uploader/1.0.0.zip"
       }
     },
     "Mappings": {
