@@ -1,0 +1,626 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "Deploy all Chatanoo Custom Resources",
+    "Metadata": {
+
+    },
+    "Parameters": {
+      "DeploymentBucket": {
+        "Description": "Bucket where the custom resouces sources code is stored",
+        "Type": "String",
+        "Default": "chatanoo-deployement"
+      },
+
+      "CloudFrontIdentityKey": {
+        "Type": "String",
+        "Default": "aws-cloudformation-cloudfront-identity/latest.zip"
+      },
+      "CognitoIdentityPoolKey": {
+        "Type": "String",
+        "Default": "aws-cloudformation-cognito-identitypool/latest.zip"
+      },
+      "CognitoIdentityPoolRolesKey": {
+        "Type": "String",
+        "Default": "aws-cloudformation-cognito-identitypoolroles/latest.zip"
+      },
+      "CognitoUserPoolKey": {
+        "Type": "String",
+        "Default": "aws-cloudformation-cognito-userpool/latest.zip"
+      },
+      "CognitoUserPoolClientKey": {
+        "Type": "String",
+        "Default": "aws-cloudformation-cognito-userpoolclient/latest.zip"
+      },
+      "CognitoUserPoolCustomAttributesKey": {
+        "Type": "String",
+        "Default": "aws-cloudformation-cognito-userpoolcustomattributes/latest.zip"
+      },
+      "DynamoDBItemKey": {
+        "Type": "String",
+        "Default": "aws-cloudformation-dynamodb-item/latest.zip"
+      },
+      "ElasticTranscoderPipelineKey": {
+        "Type": "String",
+        "Default": "aws-cloudformation-elastic-transcoder-pipeline/latest.zip"
+      },
+      "ElasticTranscoderPresetKey": {
+        "Type": "String",
+        "Default": "aws-cloudformation-elastic-transcoder-preset/latest.zip"
+      },
+      "S3UploaderKey": {
+        "Type": "String",
+        "Default": "aws-cloudformation-s3-uploader/latest.zip"
+      }
+    },
+    "Mappings": {
+
+    },
+    "Conditions": {
+
+    },
+    "Resources": {
+
+      "CloudFrontIdentityRole": {
+        "Type": "AWS::IAM::Role",
+        "Properties": {
+          "AssumeRolePolicyDocument": {
+            "Version": "2012-10-17",
+            "Statement": [{ "Effect": "Allow", "Principal": {"Service": ["lambda.amazonaws.com"]}, "Action": ["sts:AssumeRole"] }]
+          },
+          "Path": "/",
+          "Policies": [{
+            "PolicyName": "root",
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [{
+                "Version": "2012-10-17",
+                "Statement": [
+                  {
+                    "Effect": "Allow",
+                    "Action": [
+                      "logs:CreateLogGroup",
+                      "logs:CreateLogStream",
+                      "logs:PutLogEvents"
+                    ],
+                    "Resource": "arn:aws:logs:*:*:*"
+                  },
+                  {
+                    "Effect": "Allow",
+                    "Action": [
+                      "elastictranscoder:*",
+                      "iam:PassRole"
+                    ],
+                    "Resource": [
+                      "*"
+                    ]
+                  }
+                ]
+              }]
+            }
+          }]
+        }
+      },
+
+      "CloudFrontIdentityFunction": {
+        "Type": "AWS::Lambda::Function",
+        "Properties": {
+          "Handler": "index.handler",
+          "Role": { "Fn::GetAtt" : ["CloudFrontIdentityRole", "Arn"] },
+          "Code": {
+            "S3Bucket": { "Ref": "DeploymentBucket" },
+            "S3Key": { "Ref": "CloudFrontIdentityKey" }
+          },
+          "Runtime": "nodejs"
+        }
+      },
+      "CognitoIdentityPoolRole": {
+        "Type": "AWS::IAM::Role",
+        "Properties": {
+          "AssumeRolePolicyDocument": {
+            "Version": "2012-10-17",
+            "Statement": [{ "Effect": "Allow", "Principal": {"Service": ["lambda.amazonaws.com"]}, "Action": ["sts:AssumeRole"] }]
+          },
+          "Path": "/",
+          "Policies": [{
+            "PolicyName": "root",
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [{
+                "Version": "2012-10-17",
+                "Statement": [
+                  {
+                    "Effect": "Allow",
+                    "Action": [
+                      "logs:CreateLogGroup",
+                      "logs:CreateLogStream",
+                      "logs:PutLogEvents"
+                    ],
+                    "Resource": "arn:aws:logs:*:*:*"
+                  },
+                  {
+                    "Effect": "Allow",
+                    "Action": [
+                      "cognito-identity:*",
+                      "iam:PassRole"
+                    ],
+                    "Resource": [
+                      "*"
+                    ]
+                  }
+                ]
+              }]
+            }
+          }]
+        }
+      },
+      "CognitoIdentityPoolFunction": {
+        "Type": "AWS::Lambda::Function",
+        "Properties": {
+          "Handler": "index.handler",
+          "Role": { "Fn::GetAtt" : ["CognitoIdentityPoolRole", "Arn"] },
+          "Code": {
+            "S3Bucket": { "Ref": "DeploymentBucket" },
+            "S3Key": { "Ref": "CognitoIdentityPoolKey" }
+          },
+          "Runtime": "nodejs"
+        }
+      },
+
+      "CognitoIdentityPoolRolesRole": {
+        "Type": "AWS::IAM::Role",
+        "Properties": {
+          "AssumeRolePolicyDocument": {
+            "Version": "2012-10-17",
+            "Statement": [{ "Effect": "Allow", "Principal": {"Service": ["lambda.amazonaws.com"]}, "Action": ["sts:AssumeRole"] }]
+          },
+          "Path": "/",
+          "Policies": [{
+            "PolicyName": "root",
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [{
+                "Version": "2012-10-17",
+                "Statement": [
+                  {
+                    "Effect": "Allow",
+                    "Action": [
+                      "logs:CreateLogGroup",
+                      "logs:CreateLogStream",
+                      "logs:PutLogEvents"
+                    ],
+                    "Resource": "arn:aws:logs:*:*:*"
+                  },
+                  {
+                    "Effect": "Allow",
+                    "Action": [
+                      "cognito-identity:*",
+                      "iam:PassRole"
+                    ],
+                    "Resource": [
+                      "*"
+                    ]
+                  }
+                ]
+              }]
+            }
+          }]
+        }
+      },
+      "CognitoIdentityPoolRolesFunction": {
+        "Type": "AWS::Lambda::Function",
+        "Properties": {
+          "Handler": "index.handler",
+          "Role": { "Fn::GetAtt" : ["CognitoIdentityPoolRolesRole", "Arn"] },
+          "Code": {
+            "S3Bucket": { "Ref": "DeploymentBucket" },
+            "S3Key": { "Ref": "CognitoIdentityPoolRolesKey" }
+          },
+          "Runtime": "nodejs"
+        }
+      },
+
+      "CognitoUserPoolRole": {
+        "Type": "AWS::IAM::Role",
+        "Properties": {
+          "AssumeRolePolicyDocument": {
+            "Version": "2012-10-17",
+            "Statement": [{ "Effect": "Allow", "Principal": {"Service": ["lambda.amazonaws.com"]}, "Action": ["sts:AssumeRole"] }]
+          },
+          "Path": "/",
+          "Policies": [{
+            "PolicyName": "root",
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [{
+                "Version": "2012-10-17",
+                "Statement": [
+                  {
+                    "Effect": "Allow",
+                    "Action": [
+                      "logs:CreateLogGroup",
+                      "logs:CreateLogStream",
+                      "logs:PutLogEvents"
+                    ],
+                    "Resource": "arn:aws:logs:*:*:*"
+                  },
+                  {
+                    "Effect": "Allow",
+                    "Action": [
+                      "cognito-idp:*",
+                      "iam:PassRole"
+                    ],
+                    "Resource": [
+                      "*"
+                    ]
+                  }
+                ]
+              }]
+            }
+          }]
+        }
+      },
+      "CognitoUserPoolFunction": {
+        "Type": "AWS::Lambda::Function",
+        "Properties": {
+          "Handler": "index.handler",
+          "Role": { "Fn::GetAtt" : ["CognitoUserPoolRole", "Arn"] },
+          "Code": {
+            "S3Bucket": { "Ref": "DeploymentBucket" },
+            "S3Key": { "Ref": "CognitoUserPoolKey" }
+          },
+          "Runtime": "nodejs"
+        }
+      },
+
+      "CognitoUserPoolClientRole": {
+        "Type": "AWS::IAM::Role",
+        "Properties": {
+          "AssumeRolePolicyDocument": {
+            "Version": "2012-10-17",
+            "Statement": [{ "Effect": "Allow", "Principal": {"Service": ["lambda.amazonaws.com"]}, "Action": ["sts:AssumeRole"] }]
+          },
+          "Path": "/",
+          "Policies": [{
+            "PolicyName": "root",
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [{
+                "Version": "2012-10-17",
+                "Statement": [
+                  {
+                    "Effect": "Allow",
+                    "Action": [
+                      "logs:CreateLogGroup",
+                      "logs:CreateLogStream",
+                      "logs:PutLogEvents"
+                    ],
+                    "Resource": "arn:aws:logs:*:*:*"
+                  },
+                  {
+                    "Effect": "Allow",
+                    "Action": [
+                      "cognito-idp:*",
+                      "iam:PassRole"
+                    ],
+                    "Resource": [
+                      "*"
+                    ]
+                  }
+                ]
+              }]
+            }
+          }]
+        }
+      },
+      "CognitoUserPoolClientFunction": {
+        "Type": "AWS::Lambda::Function",
+        "Properties": {
+          "Handler": "index.handler",
+          "Role": { "Fn::GetAtt" : ["CognitoUserPoolClientRole", "Arn"] },
+          "Code": {
+            "S3Bucket": { "Ref": "DeploymentBucket" },
+            "S3Key": { "Ref": "CognitoUserPoolClientKey" }
+          },
+          "Runtime": "nodejs"
+        }
+      },
+
+      "CognitoUserPoolCustomAttributesRole": {
+        "Type": "AWS::IAM::Role",
+        "Properties": {
+          "AssumeRolePolicyDocument": {
+            "Version": "2012-10-17",
+            "Statement": [{ "Effect": "Allow", "Principal": {"Service": ["lambda.amazonaws.com"]}, "Action": ["sts:AssumeRole"] }]
+          },
+          "Path": "/",
+          "Policies": [{
+            "PolicyName": "root",
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [{
+                "Version": "2012-10-17",
+                "Statement": [
+                  {
+                    "Effect": "Allow",
+                    "Action": [
+                      "logs:CreateLogGroup",
+                      "logs:CreateLogStream",
+                      "logs:PutLogEvents"
+                    ],
+                    "Resource": "arn:aws:logs:*:*:*"
+                  },
+                  {
+                    "Effect": "Allow",
+                    "Action": [
+                      "cognito-idp:*",
+                      "iam:PassRole"
+                    ],
+                    "Resource": [
+                      "*"
+                    ]
+                  }
+                ]
+              }]
+            }
+          }]
+        }
+      },
+      "CognitoUserPoolCustomAttributesFunction": {
+        "Type": "AWS::Lambda::Function",
+        "Properties": {
+          "Handler": "index.handler",
+          "Role": { "Fn::GetAtt" : ["CognitoUserPoolCustomAttributesRole", "Arn"] },
+          "Code": {
+            "S3Bucket": { "Ref": "DeploymentBucket" },
+            "S3Key": { "Ref": "CognitoUserPoolCustomAttributesKey" }
+          },
+          "Runtime": "nodejs"
+        }
+      },
+
+      "DynamoDBItemRole": {
+        "Type": "AWS::IAM::Role",
+        "Properties": {
+          "AssumeRolePolicyDocument": {
+            "Version": "2012-10-17",
+            "Statement": [{ "Effect": "Allow", "Principal": {"Service": ["lambda.amazonaws.com"]}, "Action": ["sts:AssumeRole"] }]
+          },
+          "Path": "/",
+          "Policies": [{
+            "PolicyName": "root",
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [{
+                "Version": "2012-10-17",
+                "Statement": [
+                  {
+                    "Effect": "Allow",
+                    "Action": [
+                      "logs:CreateLogGroup",
+                      "logs:CreateLogStream",
+                      "logs:PutLogEvents"
+                    ],
+                    "Resource": "arn:aws:logs:*:*:*"
+                  },
+                  {
+                    "Effect": "Allow",
+                    "Action": [
+                      "dynamodb:*",
+                      "iam:PassRole"
+                    ],
+                    "Resource": [
+                      "*"
+                    ]
+                  }
+                ]
+              }]
+            }
+          }]
+        }
+      },
+      "DynamoDBItemFunction": {
+        "Type": "AWS::Lambda::Function",
+        "Properties": {
+          "Handler": "index.handler",
+          "Role": { "Fn::GetAtt" : ["DynamoDBItemRole", "Arn"] },
+          "Code": {
+            "S3Bucket": { "Ref": "DeploymentBucket" },
+            "S3Key": { "Ref": "DynamoDBItemKey" }
+          },
+          "Runtime": "nodejs"
+        }
+      },
+
+      "ElasticTranscoderPipelineRole": {
+        "Type": "AWS::IAM::Role",
+        "Properties": {
+          "AssumeRolePolicyDocument": {
+            "Version": "2012-10-17",
+            "Statement": [{ "Effect": "Allow", "Principal": {"Service": ["lambda.amazonaws.com"]}, "Action": ["sts:AssumeRole"] }]
+          },
+          "Path": "/",
+          "Policies": [{
+            "PolicyName": "root",
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [{
+                "Version": "2012-10-17",
+                "Statement": [
+                  {
+                    "Effect": "Allow",
+                    "Action": [
+                      "logs:CreateLogGroup",
+                      "logs:CreateLogStream",
+                      "logs:PutLogEvents"
+                    ],
+                    "Resource": "arn:aws:logs:*:*:*"
+                  },
+                  {
+                    "Effect": "Allow",
+                    "Action": [
+                      "elastictranscoder:*",
+                      "iam:PassRole"
+                    ],
+                    "Resource": [
+                      "*"
+                    ]
+                  }
+                ]
+              }]
+            }
+          }]
+        }
+      },
+      "ElasticTranscoderPipelineFunction": {
+        "Type": "AWS::Lambda::Function",
+        "Properties": {
+          "Handler": "index.handler",
+          "Role": { "Fn::GetAtt" : ["ElasticTranscoderPipelineRole", "Arn"] },
+          "Code": {
+            "S3Bucket": { "Ref": "DeploymentBucket" },
+            "S3Key": { "Ref": "ElasticTranscoderPipelineKey" }
+          },
+          "Runtime": "nodejs"
+        }
+      },
+
+      "ElasticTranscoderPresetRole": {
+        "Type": "AWS::IAM::Role",
+        "Properties": {
+          "AssumeRolePolicyDocument": {
+            "Version": "2012-10-17",
+            "Statement": [{ "Effect": "Allow", "Principal": {"Service": ["lambda.amazonaws.com"]}, "Action": ["sts:AssumeRole"] }]
+          },
+          "Path": "/",
+          "Policies": [{
+            "PolicyName": "root",
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [{
+                "Version": "2012-10-17",
+                "Statement": [
+                  {
+                    "Effect": "Allow",
+                    "Action": [
+                      "logs:CreateLogGroup",
+                      "logs:CreateLogStream",
+                      "logs:PutLogEvents"
+                    ],
+                    "Resource": "arn:aws:logs:*:*:*"
+                  },
+                  {
+                    "Effect": "Allow",
+                    "Action": [
+                      "elastictranscoder:*",
+                      "iam:PassRole"
+                    ],
+                    "Resource": [
+                      "*"
+                    ]
+                  }
+                ]
+              }]
+            }
+          }]
+        }
+      },
+      "ElasticTranscoderPresetFunction": {
+        "Type": "AWS::Lambda::Function",
+        "Properties": {
+          "Handler": "index.handler",
+          "Role": { "Fn::GetAtt" : ["ElasticTranscoderPresetRole", "Arn"] },
+          "Code": {
+            "S3Bucket": { "Ref": "DeploymentBucket" },
+            "S3Key": { "Ref": "ElasticTranscoderPresetKey" }
+          },
+          "Runtime": "nodejs"
+        }
+      },
+
+      "S3UploaderRole": {
+        "Type": "AWS::IAM::Role",
+        "Properties": {
+          "AssumeRolePolicyDocument": {
+            "Version": "2012-10-17",
+            "Statement": [{ "Effect": "Allow", "Principal": {"Service": ["lambda.amazonaws.com"]}, "Action": ["sts:AssumeRole"] }]
+          },
+          "Path": "/",
+          "Policies": [{
+            "PolicyName": "root",
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [{
+                "Version": "2012-10-17",
+                "Statement": [
+                  {
+                    "Effect": "Allow",
+                    "Action": [
+                      "logs:CreateLogGroup",
+                      "logs:CreateLogStream",
+                      "logs:PutLogEvents"
+                    ],
+                    "Resource": "arn:aws:logs:*:*:*"
+                  },
+                  {
+                    "Effect": "Allow",
+                    "Action": [
+                      "s3:*",
+                      "iam:PassRole"
+                    ],
+                    "Resource": [
+                      "*"
+                    ]
+                  }
+                ]
+              }]
+            }
+          }]
+        }
+      },
+      "S3UploaderFunction": {
+        "Type": "AWS::Lambda::Function",
+        "Properties": {
+          "Handler": "index.handler",
+          "Role": { "Fn::GetAtt" : ["S3UploaderRole", "Arn"] },
+          "Code": {
+            "S3Bucket": { "Ref": "DeploymentBucket" },
+            "S3Key": { "Ref": "S3UploaderKey" }
+          },
+          "Runtime": "nodejs"
+        }
+      }
+
+    },
+    "Outputs": {
+      "CloudFrontIdentityArn" : {
+        "Value" : { "Fn::GetAtt" : [ "CloudFrontIdentityFunction", "Arn" ]}
+      },
+      "CognitoIdentityPoolArn" : {
+        "Value" : { "Fn::GetAtt" : [ "CognitoIdentityPoolFunction", "Arn" ]}
+      },
+      "CognitoIdentityPoolRolesArn" : {
+        "Value" : { "Fn::GetAtt" : [ "CognitoIdentityPoolRolesFunction", "Arn" ]}
+      },
+      "CognitoUserPoolArn" : {
+        "Value" : { "Fn::GetAtt" : [ "CognitoUserPoolFunction", "Arn" ]}
+      },
+      "CognitoUserPoolClientArn" : {
+        "Value" : { "Fn::GetAtt" : [ "CognitoUserPoolClientFunction", "Arn" ]}
+      },
+      "CognitoUserPoolCustomAttributesArn" : {
+        "Value" : { "Fn::GetAtt" : [ "CognitoUserPoolCustomAttributesFunction", "Arn" ]}
+      },
+      "DynamoDBItemArn" : {
+        "Value" : { "Fn::GetAtt" : [ "DynamoDBItemFunction", "Arn" ]}
+      },
+      "ElasticTranscoderPipelineArn" : {
+        "Value" : { "Fn::GetAtt" : [ "ElasticTranscoderPipelineFunction", "Arn" ]}
+      },
+      "ElasticTranscoderPresetArn" : {
+        "Value" : { "Fn::GetAtt" : [ "ElasticTranscoderPresetFunction", "Arn" ]}
+      },
+      "S3UploaderArn" : {
+        "Value" : { "Fn::GetAtt" : [ "S3UploaderFunction", "Arn" ]}
+      }
+    }
+}

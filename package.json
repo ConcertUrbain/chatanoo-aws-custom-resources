@@ -1,0 +1,34 @@
+{
+  "name": "chatanoo-aws-custom-resources",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Warn: no test specified\" && exit 0",
+    "deploy": "ls node_modules/ | grep aws-cloudformation | while read line; do node_modules/.bin/cfn-lambda deploy $line -s eu-west-1; done",
+    "zip": "ls node_modules/ | grep aws-cloudformation | while read line; do node_modules/.bin/cfn-lambda zip $line; done"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ConcertUrbain/chatanoo-aws-custom-resources.git"
+  },
+  "author": "Mathieu Desvé <mathieu.desve@me.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ConcertUrbain/chatanoo-aws-custom-resources/issues"
+  },
+  "homepage": "https://github.com/ConcertUrbain/chatanoo-aws-custom-resources#readme",
+  "dependencies": {
+    "aws-cloudformation-cloudfront-identity": "git+https://github.com/mazerte/aws-cloudformation-cloudfront-identity.git",
+    "aws-cloudformation-cognito-identitypool": "git+https://github.com/mazerte/aws-cloudformation-cognito-identity-pool.git",
+    "aws-cloudformation-cognito-identitypoolroles": "git+https://github.com/mazerte/aws-cloudformation-cognito-identity-pool-roles.git",
+    "aws-cloudformation-cognito-userpool": "git+https://github.com/mazerte/aws-cloudformation-cognito-user-pool.git",
+    "aws-cloudformation-cognito-userpoolclient": "git+https://github.com/mazerte/aws-cloudformation-cognito-userpoolclient.git",
+    "aws-cloudformation-cognito-userpoolcustomattributes": "git+https://github.com/mazerte/aws-cloudformation-cognito-user-pool-custom-attribute.git",
+    "aws-cloudformation-dynamodb-item": "git+https://github.com/mazerte/aws-cloudformation-dynamodb-item.git",
+    "aws-cloudformation-elastic-transcoder-pipeline": "git+https://github.com/mazerte/aws-cloudformation-elastic-transcoder-pipeline.git",
+    "aws-cloudformation-elastic-transcoder-preset": "git+https://github.com/mazerte/aws-cloudformation-elastic-transcoder-preset.git",
+    "aws-cloudformation-s3-uploader": "git+https://github.com/mazerte/aws-cloudformation-s3-uploader.git",
+    "cfn-lambda": "git+https://github.com/mazerte/cfn-lambda.git"
+  }
+}
