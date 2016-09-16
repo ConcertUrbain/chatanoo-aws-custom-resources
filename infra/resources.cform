@@ -13,7 +13,7 @@
 
       "CloudFrontIdentityKey": {
         "Type": "String",
-        "Default": "aws-cloudformation-cloudfront-identity/1.0.0.zip"
+        "Default": "aws-cloudformation-cloudfront-identity/1.0.1.zip"
       },
       "CognitoIdentityPoolKey": {
         "Type": "String",
@@ -29,11 +29,11 @@
       },
       "CognitoUserPoolClientKey": {
         "Type": "String",
-        "Default": "aws-cloudformation-cognito-userpoolclient/1.0.0.zip"
+        "Default": "aws-cloudformation-cognito-userpoolclient/1.0.1.zip"
       },
       "CognitoUserPoolCustomAttributesKey": {
         "Type": "String",
-        "Default": "aws-cloudformation-cognito-userpoolcustomattributes/1.0.0.zip"
+        "Default": "aws-cloudformation-cognito-userpoolcustomattributes/1.0.1.zip"
       },
       "DynamoDBItemKey": {
         "Type": "String",
