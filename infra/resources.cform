@@ -8,7 +8,7 @@
       "DeploymentBucket": {
         "Description": "Bucket where the custom resouces sources code is stored",
         "Type": "String",
-        "Default": "chatanoo-deployement"
+        "Default": "chatanoo-deployment"
       },
 
       "CloudFrontIdentityKey": {
@@ -72,30 +72,27 @@
             "PolicyName": "root",
             "PolicyDocument": {
               "Version": "2012-10-17",
-              "Statement": [{
-                "Version": "2012-10-17",
-                "Statement": [
-                  {
-                    "Effect": "Allow",
-                    "Action": [
-                      "logs:CreateLogGroup",
-                      "logs:CreateLogStream",
-                      "logs:PutLogEvents"
-                    ],
-                    "Resource": "arn:aws:logs:*:*:*"
-                  },
-                  {
-                    "Effect": "Allow",
-                    "Action": [
-                      "elastictranscoder:*",
-                      "iam:PassRole"
-                    ],
-                    "Resource": [
-                      "*"
-                    ]
-                  }
-                ]
-              }]
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "logs:CreateLogGroup",
+                    "logs:CreateLogStream",
+                    "logs:PutLogEvents"
+                  ],
+                  "Resource": "arn:aws:logs:*:*:*"
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "elastictranscoder:*",
+                    "iam:PassRole"
+                  ],
+                  "Resource": [
+                    "*"
+                  ]
+                }
+              ]
             }
           }]
         }
@@ -125,30 +122,27 @@
             "PolicyName": "root",
             "PolicyDocument": {
               "Version": "2012-10-17",
-              "Statement": [{
-                "Version": "2012-10-17",
-                "Statement": [
-                  {
-                    "Effect": "Allow",
-                    "Action": [
-                      "logs:CreateLogGroup",
-                      "logs:CreateLogStream",
-                      "logs:PutLogEvents"
-                    ],
-                    "Resource": "arn:aws:logs:*:*:*"
-                  },
-                  {
-                    "Effect": "Allow",
-                    "Action": [
-                      "cognito-identity:*",
-                      "iam:PassRole"
-                    ],
-                    "Resource": [
-                      "*"
-                    ]
-                  }
-                ]
-              }]
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "logs:CreateLogGroup",
+                    "logs:CreateLogStream",
+                    "logs:PutLogEvents"
+                  ],
+                  "Resource": "arn:aws:logs:*:*:*"
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "cognito-identity:*",
+                    "iam:PassRole"
+                  ],
+                  "Resource": [
+                    "*"
+                  ]
+                }
+              ]
             }
           }]
         }
@@ -178,30 +172,27 @@
             "PolicyName": "root",
             "PolicyDocument": {
               "Version": "2012-10-17",
-              "Statement": [{
-                "Version": "2012-10-17",
-                "Statement": [
-                  {
-                    "Effect": "Allow",
-                    "Action": [
-                      "logs:CreateLogGroup",
-                      "logs:CreateLogStream",
-                      "logs:PutLogEvents"
-                    ],
-                    "Resource": "arn:aws:logs:*:*:*"
-                  },
-                  {
-                    "Effect": "Allow",
-                    "Action": [
-                      "cognito-identity:*",
-                      "iam:PassRole"
-                    ],
-                    "Resource": [
-                      "*"
-                    ]
-                  }
-                ]
-              }]
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "logs:CreateLogGroup",
+                    "logs:CreateLogStream",
+                    "logs:PutLogEvents"
+                  ],
+                  "Resource": "arn:aws:logs:*:*:*"
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "cognito-identity:*",
+                    "iam:PassRole"
+                  ],
+                  "Resource": [
+                    "*"
+                  ]
+                }
+              ]
             }
           }]
         }
@@ -231,30 +222,27 @@
             "PolicyName": "root",
             "PolicyDocument": {
               "Version": "2012-10-17",
-              "Statement": [{
-                "Version": "2012-10-17",
-                "Statement": [
-                  {
-                    "Effect": "Allow",
-                    "Action": [
-                      "logs:CreateLogGroup",
-                      "logs:CreateLogStream",
-                      "logs:PutLogEvents"
-                    ],
-                    "Resource": "arn:aws:logs:*:*:*"
-                  },
-                  {
-                    "Effect": "Allow",
-                    "Action": [
-                      "cognito-idp:*",
-                      "iam:PassRole"
-                    ],
-                    "Resource": [
-                      "*"
-                    ]
-                  }
-                ]
-              }]
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "logs:CreateLogGroup",
+                    "logs:CreateLogStream",
+                    "logs:PutLogEvents"
+                  ],
+                  "Resource": "arn:aws:logs:*:*:*"
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "cognito-idp:*",
+                    "iam:PassRole"
+                  ],
+                  "Resource": [
+                    "*"
+                  ]
+                }
+              ]
             }
           }]
         }
@@ -284,30 +272,27 @@
             "PolicyName": "root",
             "PolicyDocument": {
               "Version": "2012-10-17",
-              "Statement": [{
-                "Version": "2012-10-17",
-                "Statement": [
-                  {
-                    "Effect": "Allow",
-                    "Action": [
-                      "logs:CreateLogGroup",
-                      "logs:CreateLogStream",
-                      "logs:PutLogEvents"
-                    ],
-                    "Resource": "arn:aws:logs:*:*:*"
-                  },
-                  {
-                    "Effect": "Allow",
-                    "Action": [
-                      "cognito-idp:*",
-                      "iam:PassRole"
-                    ],
-                    "Resource": [
-                      "*"
-                    ]
-                  }
-                ]
-              }]
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "logs:CreateLogGroup",
+                    "logs:CreateLogStream",
+                    "logs:PutLogEvents"
+                  ],
+                  "Resource": "arn:aws:logs:*:*:*"
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "cognito-idp:*",
+                    "iam:PassRole"
+                  ],
+                  "Resource": [
+                    "*"
+                  ]
+                }
+              ]
             }
           }]
         }
@@ -337,30 +322,27 @@
             "PolicyName": "root",
             "PolicyDocument": {
               "Version": "2012-10-17",
-              "Statement": [{
-                "Version": "2012-10-17",
-                "Statement": [
-                  {
-                    "Effect": "Allow",
-                    "Action": [
-                      "logs:CreateLogGroup",
-                      "logs:CreateLogStream",
-                      "logs:PutLogEvents"
-                    ],
-                    "Resource": "arn:aws:logs:*:*:*"
-                  },
-                  {
-                    "Effect": "Allow",
-                    "Action": [
-                      "cognito-idp:*",
-                      "iam:PassRole"
-                    ],
-                    "Resource": [
-                      "*"
-                    ]
-                  }
-                ]
-              }]
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "logs:CreateLogGroup",
+                    "logs:CreateLogStream",
+                    "logs:PutLogEvents"
+                  ],
+                  "Resource": "arn:aws:logs:*:*:*"
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "cognito-idp:*",
+                    "iam:PassRole"
+                  ],
+                  "Resource": [
+                    "*"
+                  ]
+                }
+              ]
             }
           }]
         }
@@ -390,30 +372,27 @@
             "PolicyName": "root",
             "PolicyDocument": {
               "Version": "2012-10-17",
-              "Statement": [{
-                "Version": "2012-10-17",
-                "Statement": [
-                  {
-                    "Effect": "Allow",
-                    "Action": [
-                      "logs:CreateLogGroup",
-                      "logs:CreateLogStream",
-                      "logs:PutLogEvents"
-                    ],
-                    "Resource": "arn:aws:logs:*:*:*"
-                  },
-                  {
-                    "Effect": "Allow",
-                    "Action": [
-                      "dynamodb:*",
-                      "iam:PassRole"
-                    ],
-                    "Resource": [
-                      "*"
-                    ]
-                  }
-                ]
-              }]
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "logs:CreateLogGroup",
+                    "logs:CreateLogStream",
+                    "logs:PutLogEvents"
+                  ],
+                  "Resource": "arn:aws:logs:*:*:*"
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "dynamodb:*",
+                    "iam:PassRole"
+                  ],
+                  "Resource": [
+                    "*"
+                  ]
+                }
+              ]
             }
           }]
         }
@@ -443,30 +422,27 @@
             "PolicyName": "root",
             "PolicyDocument": {
               "Version": "2012-10-17",
-              "Statement": [{
-                "Version": "2012-10-17",
-                "Statement": [
-                  {
-                    "Effect": "Allow",
-                    "Action": [
-                      "logs:CreateLogGroup",
-                      "logs:CreateLogStream",
-                      "logs:PutLogEvents"
-                    ],
-                    "Resource": "arn:aws:logs:*:*:*"
-                  },
-                  {
-                    "Effect": "Allow",
-                    "Action": [
-                      "elastictranscoder:*",
-                      "iam:PassRole"
-                    ],
-                    "Resource": [
-                      "*"
-                    ]
-                  }
-                ]
-              }]
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "logs:CreateLogGroup",
+                    "logs:CreateLogStream",
+                    "logs:PutLogEvents"
+                  ],
+                  "Resource": "arn:aws:logs:*:*:*"
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "elastictranscoder:*",
+                    "iam:PassRole"
+                  ],
+                  "Resource": [
+                    "*"
+                  ]
+                }
+              ]
             }
           }]
         }
@@ -496,30 +472,27 @@
             "PolicyName": "root",
             "PolicyDocument": {
               "Version": "2012-10-17",
-              "Statement": [{
-                "Version": "2012-10-17",
-                "Statement": [
-                  {
-                    "Effect": "Allow",
-                    "Action": [
-                      "logs:CreateLogGroup",
-                      "logs:CreateLogStream",
-                      "logs:PutLogEvents"
-                    ],
-                    "Resource": "arn:aws:logs:*:*:*"
-                  },
-                  {
-                    "Effect": "Allow",
-                    "Action": [
-                      "elastictranscoder:*",
-                      "iam:PassRole"
-                    ],
-                    "Resource": [
-                      "*"
-                    ]
-                  }
-                ]
-              }]
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "logs:CreateLogGroup",
+                    "logs:CreateLogStream",
+                    "logs:PutLogEvents"
+                  ],
+                  "Resource": "arn:aws:logs:*:*:*"
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "elastictranscoder:*",
+                    "iam:PassRole"
+                  ],
+                  "Resource": [
+                    "*"
+                  ]
+                }
+              ]
             }
           }]
         }
@@ -549,30 +522,27 @@
             "PolicyName": "root",
             "PolicyDocument": {
               "Version": "2012-10-17",
-              "Statement": [{
-                "Version": "2012-10-17",
-                "Statement": [
-                  {
-                    "Effect": "Allow",
-                    "Action": [
-                      "logs:CreateLogGroup",
-                      "logs:CreateLogStream",
-                      "logs:PutLogEvents"
-                    ],
-                    "Resource": "arn:aws:logs:*:*:*"
-                  },
-                  {
-                    "Effect": "Allow",
-                    "Action": [
-                      "s3:*",
-                      "iam:PassRole"
-                    ],
-                    "Resource": [
-                      "*"
-                    ]
-                  }
-                ]
-              }]
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "logs:CreateLogGroup",
+                    "logs:CreateLogStream",
+                    "logs:PutLogEvents"
+                  ],
+                  "Resource": "arn:aws:logs:*:*:*"
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "s3:*",
+                    "iam:PassRole"
+                  ],
+                  "Resource": [
+                    "*"
+                  ]
+                }
+              ]
             }
           }]
         }
