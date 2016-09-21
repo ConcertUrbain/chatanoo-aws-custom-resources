@@ -562,35 +562,35 @@
 
     },
     "Outputs": {
-      "CloudFrontIdentityArn" : {
-        "Value" : { "Fn::GetAtt" : [ "CloudFrontIdentityFunction", "Arn" ]}
+      "CloudFrontIdentity" : {
+        "Value" : { "Ref": "CloudFrontIdentityFunction" }
       },
-      "CognitoIdentityPoolArn" : {
-        "Value" : { "Fn::GetAtt" : [ "CognitoIdentityPoolFunction", "Arn" ]}
+      "CognitoIdentityPool" : {
+        "Value" : { "Ref": "CognitoIdentityPoolFunction" }
       },
-      "CognitoIdentityPoolRolesArn" : {
-        "Value" : { "Fn::GetAtt" : [ "CognitoIdentityPoolRolesFunction", "Arn" ]}
+      "CognitoIdentityPoolRoles" : {
+        "Value" : { "Ref": "CognitoIdentityPoolRolesFunction" }
       },
-      "CognitoUserPoolArn" : {
-        "Value" : { "Fn::GetAtt" : [ "CognitoUserPoolFunction", "Arn" ]}
+      "CognitoUserPool" : {
+        "Value" : { "Ref": "CognitoUserPoolFunction" }
       },
-      "CognitoUserPoolClientArn" : {
-        "Value" : { "Fn::GetAtt" : [ "CognitoUserPoolClientFunction", "Arn" ]}
+      "CognitoUserPoolClient" : {
+        "Value" : { "Ref": "CognitoUserPoolClientFunction" }
       },
-      "CognitoUserPoolCustomAttributesArn" : {
-        "Value" : { "Fn::GetAtt" : [ "CognitoUserPoolCustomAttributesFunction", "Arn" ]}
+      "CognitoUserPoolCustomAttributes" : {
+        "Value" : { "Ref": "CognitoUserPoolCustomAttributesFunction" }
       },
-      "DynamoDBItemArn" : {
-        "Value" : { "Fn::GetAtt" : [ "DynamoDBItemFunction", "Arn" ]}
+      "DynamoDBItem" : {
+        "Value" : { "Ref": "DynamoDBItemFunction" }
       },
-      "ElasticTranscoderPipelineArn" : {
-        "Value" : { "Fn::GetAtt" : [ "ElasticTranscoderPipelineFunction", "Arn" ]}
+      "ElasticTranscoderPipeline" : {
+        "Value" : { "Ref": "ElasticTranscoderPipelineFunction" }
       },
-      "ElasticTranscoderPresetArn" : {
-        "Value" : { "Fn::GetAtt" : [ "ElasticTranscoderPresetFunction", "Arn" ]}
+      "ElasticTranscoderPreset" : {
+        "Value" : { "Ref": "ElasticTranscoderPresetFunction" }
       },
-      "S3UploaderArn" : {
-        "Value" : { "Fn::GetAtt" : [ "S3UploaderFunction", "Arn" ]}
+      "S3Uploader" : {
+        "Value" : { "Ref": "S3UploaderFunction" }
       }
     }
 }
