@@ -85,7 +85,7 @@
                 {
                   "Effect": "Allow",
                   "Action": [
-                    "elastictranscoder:*",
+                    "cloudfront:*",
                     "iam:PassRole"
                   ],
                   "Resource": [
