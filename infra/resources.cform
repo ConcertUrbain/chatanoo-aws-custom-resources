@@ -502,6 +502,7 @@
         "Properties": {
           "Handler": "index.handler",
           "Role": { "Fn::GetAtt" : ["ElasticTranscoderPresetRole", "Arn"] },
+          "Timeout": 60,
           "Code": {
             "S3Bucket": { "Ref": "DeploymentBucket" },
             "S3Key": { "Ref": "ElasticTranscoderPresetKey" }
@@ -552,6 +553,8 @@
         "Properties": {
           "Handler": "index.handler",
           "Role": { "Fn::GetAtt" : ["S3UploaderRole", "Arn"] },
+          "MemorySize": 1024,
+          "Timeout": 300,
           "Code": {
             "S3Bucket": { "Ref": "DeploymentBucket" },
             "S3Key": { "Ref": "S3UploaderKey" }
