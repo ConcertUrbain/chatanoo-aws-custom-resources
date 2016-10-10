@@ -610,7 +610,7 @@
           "Role": { "Fn::GetAtt" : ["PasswordGeneratorRole", "Arn"] },
           "Code": {
             "S3Bucket": { "Ref": "DeploymentBucket" },
-            "S3Key": { "Ref": "S3UploaderKey" }
+            "S3Key": { "Ref": "PasswordGeneratorKey" }
           },
           "Runtime": "nodejs"
         }
