@@ -10,6 +10,10 @@ Parameters:
     Description: Bucket where the custom resouces sources code is stored
     Type: String
     Default: chatanoo-deployment
+  MultiAZ:
+    Type: String
+    AllowedValues: ["true", "false"]
+    Default: false
   VPCId:
     Description: AWS VPC ID
     Type: AWS::EC2::VPC::Id
@@ -48,17 +52,21 @@ Parameters:
     Default: aws-cloudformation-elastic-transcoder-preset/1.0.0.zip
   S3UploaderKey:
     Type: String
-    Default: aws-cloudformation-s3-uploader/1.0.0.zip
+    Default: aws-cloudformation-s3-uploader/1.1.0.zip
   PasswordGeneratorKey:
     Type: String
     Default: aws-cloudformation-password-generator/1.0.0.zip
   SQLRequestKey:
     Type: String
     Default: aws-cloudformation-sql-request/1.0.0.zip
+  Route53HostedZoneDetailsKey:
+    Type: String
+    Default: aws-cloudformation-route53-hostedzone-details/1.0.0.zip
 
 Mappings: {}
 
-Conditions: {}
+Conditions:
+  UseMultiAZ: !Equals [!Ref MultiAZ, "true"]
 
 Resources:
 
@@ -85,6 +93,7 @@ Resources:
 
   ResourcesSubnet2:
     Type: AWS::EC2::Subnet
+    Condition: UseMultiAZ
     Properties:
       VpcId: !Ref VPCId
       CidrBlock: !Sub "${CidrPrefix}.128/25"
@@ -100,6 +109,7 @@ Resources:
 
   ResourcesSubnet2RouteTableAssociation:
     Type: AWS::EC2::SubnetRouteTableAssociation
+    Condition: UseMultiAZ
     Properties:
       SubnetId: !Ref ResourcesSubnet2
       RouteTableId: !Ref PrivateRouteTable
@@ -148,8 +158,9 @@ Resources:
       SubnetId: !Ref ResourcesSubnet1
       NetworkAclId: !Ref ResourcesNetworkAcl
 
-  ResourcesSubnet1NetworkAclAssociation:
+  ResourcesSubnet2NetworkAclAssociation:
     Type: AWS::EC2::SubnetNetworkAclAssociation
+    Condition: UseMultiAZ
     Properties:
       SubnetId: !Ref ResourcesSubnet2
       NetworkAclId: !Ref ResourcesNetworkAcl
@@ -208,18 +219,22 @@ Resources:
   CloudFrontIdentityFunction:
     Type: AWS::Lambda::Function
     Properties:
+      Description: !Sub "(${ProjectName}) CloudFrontIdentity Custom Resource"
       Handler: index.handler
       Role: !GetAtt CloudFrontIdentityRole.Arn
       Code:
         S3Bucket: !Ref DeploymentBucket
         S3Key: !Ref CloudFrontIdentityKey
       Runtime: nodejs
+      Timeout: 60
       VpcConfig:
         SecurityGroupIds:
           - !Ref ResourceSecurityGroup
-        SubnetIds:
-          - !Ref ResourcesSubnet1
-          - !Ref ResourcesSubnet2
+        SubnetIds: !If
+          - UseMultiAZ
+          - - !Ref ResourcesSubnet1
+            - !Ref ResourcesSubnet2
+          - - !Ref ResourcesSubnet1
 
   CognitoIdentityPoolRole:
     Type: AWS::IAM::Role
@@ -262,18 +277,22 @@ Resources:
   CognitoIdentityPoolFunction:
     Type: AWS::Lambda::Function
     Properties:
+      Description: !Sub "(${ProjectName}) CognitoIdentityPool Custom Resource"
       Handler: index.handler
       Role: !GetAtt CognitoIdentityPoolRole.Arn
       Code:
         S3Bucket: !Ref DeploymentBucket
         S3Key: !Ref CognitoIdentityPoolKey
       Runtime: nodejs
+      Timeout: 60
       VpcConfig:
         SecurityGroupIds:
           - !Ref ResourceSecurityGroup
-        SubnetIds:
-          - !Ref ResourcesSubnet1
-          - !Ref ResourcesSubnet2
+        SubnetIds: !If
+          - UseMultiAZ
+          - - !Ref ResourcesSubnet1
+            - !Ref ResourcesSubnet2
+          - - !Ref ResourcesSubnet1
 
   CognitoIdentityPoolRolesRole:
     Type: AWS::IAM::Role
@@ -316,18 +335,22 @@ Resources:
   CognitoIdentityPoolRolesFunction:
     Type: AWS::Lambda::Function
     Properties:
+      Description: !Sub "(${ProjectName}) CognitoIdentityPoolRoles Custom Resource"
       Handler: index.handler
       Role: !GetAtt CognitoIdentityPoolRolesRole.Arn
       Code:
         S3Bucket: !Ref DeploymentBucket
         S3Key: !Ref CognitoIdentityPoolRolesKey
       Runtime: nodejs
+      Timeout: 60
       VpcConfig:
         SecurityGroupIds:
           - !Ref ResourceSecurityGroup
-        SubnetIds:
-          - !Ref ResourcesSubnet1
-          - !Ref ResourcesSubnet2
+        SubnetIds: !If
+          - UseMultiAZ
+          - - !Ref ResourcesSubnet1
+            - !Ref ResourcesSubnet2
+          - - !Ref ResourcesSubnet1
 
   CognitoUserPoolRole:
     Type: AWS::IAM::Role
@@ -370,18 +393,22 @@ Resources:
   CognitoUserPoolFunction:
     Type: AWS::Lambda::Function
     Properties:
+      Description: !Sub "(${ProjectName}) CognitoUserPool Custom Resource"
       Handler: index.handler
       Role: !GetAtt CognitoUserPoolRole.Arn
       Code:
         S3Bucket: !Ref DeploymentBucket
         S3Key: !Ref CognitoUserPoolKey
       Runtime: nodejs
+      Timeout: 60
       VpcConfig:
         SecurityGroupIds:
           - !Ref ResourceSecurityGroup
-        SubnetIds:
-          - !Ref ResourcesSubnet1
-          - !Ref ResourcesSubnet2
+        SubnetIds: !If
+          - UseMultiAZ
+          - - !Ref ResourcesSubnet1
+            - !Ref ResourcesSubnet2
+          - - !Ref ResourcesSubnet1
 
   CognitoUserPoolClientRole:
     Type: AWS::IAM::Role
@@ -424,18 +451,22 @@ Resources:
   CognitoUserPoolClientFunction:
     Type: AWS::Lambda::Function
     Properties:
+      Description: !Sub "(${ProjectName}) CognitoUserPoolClient Custom Resource"
       Handler: index.handler
       Role: !GetAtt CognitoUserPoolClientRole.Arn
       Code:
         S3Bucket: !Ref DeploymentBucket
         S3Key: !Ref CognitoUserPoolClientKey
       Runtime: nodejs
+      Timeout: 60
       VpcConfig:
         SecurityGroupIds:
           - !Ref ResourceSecurityGroup
-        SubnetIds:
-          - !Ref ResourcesSubnet1
-          - !Ref ResourcesSubnet2
+        SubnetIds: !If
+          - UseMultiAZ
+          - - !Ref ResourcesSubnet1
+            - !Ref ResourcesSubnet2
+          - - !Ref ResourcesSubnet1
 
   CognitoUserPoolCustomAttributesRole:
     Type: AWS::IAM::Role
@@ -478,18 +509,22 @@ Resources:
   CognitoUserPoolCustomAttributesFunction:
     Type: AWS::Lambda::Function
     Properties:
+      Description: !Sub "(${ProjectName}) CognitoUserPoolCustomAttributes Custom Resource"
       Handler: index.handler
       Role: !GetAtt CognitoUserPoolCustomAttributesRole.Arn
       Code:
         S3Bucket: !Ref DeploymentBucket
         S3Key: !Ref CognitoUserPoolCustomAttributesKey
       Runtime: nodejs
+      Timeout: 60
       VpcConfig:
         SecurityGroupIds:
           - !Ref ResourceSecurityGroup
-        SubnetIds:
-          - !Ref ResourcesSubnet1
-          - !Ref ResourcesSubnet2
+        SubnetIds: !If
+          - UseMultiAZ
+          - - !Ref ResourcesSubnet1
+            - !Ref ResourcesSubnet2
+          - - !Ref ResourcesSubnet1
 
   DynamoDBItemRole:
     Type: AWS::IAM::Role
@@ -532,18 +567,22 @@ Resources:
   DynamoDBItemFunction:
     Type: AWS::Lambda::Function
     Properties:
+      Description: !Sub "(${ProjectName}) DynamoDBItem Custom Resource"
       Handler: index.handler
       Role: !GetAtt DynamoDBItemRole.Arn
       Code:
         S3Bucket: !Ref DeploymentBucket
         S3Key: !Ref DynamoDBItemKey
       Runtime: nodejs
+      Timeout: 60
       VpcConfig:
         SecurityGroupIds:
           - !Ref ResourceSecurityGroup
-        SubnetIds:
-          - !Ref ResourcesSubnet1
-          - !Ref ResourcesSubnet2
+        SubnetIds: !If
+          - UseMultiAZ
+          - - !Ref ResourcesSubnet1
+            - !Ref ResourcesSubnet2
+          - - !Ref ResourcesSubnet1
 
   ElasticTranscoderPipelineRole:
     Type: AWS::IAM::Role
@@ -586,18 +625,22 @@ Resources:
   ElasticTranscoderPipelineFunction:
     Type: AWS::Lambda::Function
     Properties:
+      Description: !Sub "(${ProjectName}) ElasticTranscoderPipeline Custom Resource"
       Handler: index.handler
       Role: !GetAtt ElasticTranscoderPipelineRole.Arn
       Code:
         S3Bucket: !Ref DeploymentBucket
         S3Key: !Ref ElasticTranscoderPipelineKey
       Runtime: nodejs
+      Timeout: 60
       VpcConfig:
         SecurityGroupIds:
           - !Ref ResourceSecurityGroup
-        SubnetIds:
-          - !Ref ResourcesSubnet1
-          - !Ref ResourcesSubnet2
+        SubnetIds: !If
+          - UseMultiAZ
+          - - !Ref ResourcesSubnet1
+            - !Ref ResourcesSubnet2
+          - - !Ref ResourcesSubnet1
 
   ElasticTranscoderPresetRole:
     Type: AWS::IAM::Role
@@ -640,19 +683,22 @@ Resources:
   ElasticTranscoderPresetFunction:
     Type: AWS::Lambda::Function
     Properties:
+      Description: !Sub "(${ProjectName}) ElasticTranscoderPreset Custom Resource"
       Handler: index.handler
       Role: !GetAtt ElasticTranscoderPresetRole.Arn
-      Timeout: 60
       Code:
         S3Bucket: !Ref DeploymentBucket
         S3Key: !Ref ElasticTranscoderPresetKey
       Runtime: nodejs
+      Timeout: 60
       VpcConfig:
         SecurityGroupIds:
           - !Ref ResourceSecurityGroup
-        SubnetIds:
-          - !Ref ResourcesSubnet1
-          - !Ref ResourcesSubnet2
+        SubnetIds: !If
+          - UseMultiAZ
+          - - !Ref ResourcesSubnet1
+            - !Ref ResourcesSubnet2
+          - - !Ref ResourcesSubnet1
 
   S3UploaderRole:
     Type: AWS::IAM::Role
@@ -695,6 +741,7 @@ Resources:
   S3UploaderFunction:
     Type: AWS::Lambda::Function
     Properties:
+      Description: !Sub "(${ProjectName}) S3Uploader Custom Resource"
       Handler: index.handler
       Role: !GetAtt S3UploaderRole.Arn
       MemorySize: 1024
@@ -706,9 +753,11 @@ Resources:
       VpcConfig:
         SecurityGroupIds:
           - !Ref ResourceSecurityGroup
-        SubnetIds:
-          - !Ref ResourcesSubnet1
-          - !Ref ResourcesSubnet2
+        SubnetIds: !If
+          - UseMultiAZ
+          - - !Ref ResourcesSubnet1
+            - !Ref ResourcesSubnet2
+          - - !Ref ResourcesSubnet1
 
   PasswordGeneratorRole:
     Type: AWS::IAM::Role
@@ -750,18 +799,22 @@ Resources:
   PasswordGeneratorFunction:
     Type: AWS::Lambda::Function
     Properties:
+      Description: !Sub "(${ProjectName}) PasswordGenerator Custom Resource"
       Handler: index.handler
       Role: !GetAtt PasswordGeneratorRole.Arn
       Code:
         S3Bucket: !Ref DeploymentBucket
         S3Key: !Ref PasswordGeneratorKey
       Runtime: nodejs
+      Timeout: 60
       VpcConfig:
         SecurityGroupIds:
           - !Ref ResourceSecurityGroup
-        SubnetIds:
-          - !Ref ResourcesSubnet1
-          - !Ref ResourcesSubnet2
+        SubnetIds: !If
+          - UseMultiAZ
+          - - !Ref ResourcesSubnet1
+            - !Ref ResourcesSubnet2
+          - - !Ref ResourcesSubnet1
 
   SQLRequestRole:
     Type: AWS::IAM::Role
@@ -804,18 +857,81 @@ Resources:
   SQLRequestFunction:
     Type: AWS::Lambda::Function
     Properties:
+      Description: !Sub "(${ProjectName}) SQLRequest Custom Resource"
       Handler: index.handler
       Role: !GetAtt SQLRequestRole.Arn
       Code:
         S3Bucket: !Ref DeploymentBucket
         S3Key: !Ref SQLRequestKey
       Runtime: nodejs
+      Timeout: 60
       VpcConfig:
         SecurityGroupIds:
           - !Ref ResourceSecurityGroup
-        SubnetIds:
-          - !Ref ResourcesSubnet1
-          - !Ref ResourcesSubnet2
+        SubnetIds: !If
+          - UseMultiAZ
+          - - !Ref ResourcesSubnet1
+            - !Ref ResourcesSubnet2
+          - - !Ref ResourcesSubnet1
+
+
+  Route53HostedZoneDetailsRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Path: "/"
+      Policies:
+        - PolicyName: root
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: arn:aws:logs:*:*:*
+              - Effect: Allow
+                Action:
+                  - ec2:CreateNetworkInterface
+                  - ec2:DescribeNetworkInterfaces
+                  - ec2:DeleteNetworkInterface
+                Resource:
+                  - "*"
+              - Effect: Allow
+                Action:
+                  - iam:PassRole
+                  - route53:GetHostedZone
+                Resource:
+                  - "*"
+
+  Route53HostedZoneDetailsFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      Description: !Sub "(${ProjectName}) Route53HostedZoneDetails Custom Resource"
+      Handler: index.handler
+      Role: !GetAtt Route53HostedZoneDetailsRole.Arn
+      Code:
+        S3Bucket: !Ref DeploymentBucket
+        S3Key: !Ref Route53HostedZoneDetailsKey
+      Runtime: nodejs
+      Timeout: 60
+      VpcConfig:
+        SecurityGroupIds:
+          - !Ref ResourceSecurityGroup
+        SubnetIds: !If
+          - UseMultiAZ
+          - - !Ref ResourcesSubnet1
+            - !Ref ResourcesSubnet2
+          - - !Ref ResourcesSubnet1
 
 Outputs:
   ResourceSecurityGroup:
@@ -844,3 +960,5 @@ Outputs:
     Value: !Ref PasswordGeneratorFunction
   SQLRequest:
     Value: !Ref SQLRequestFunction
+  Route53HostedZoneDetails:
+    Value: !Ref Route53HostedZoneDetailsFunction
