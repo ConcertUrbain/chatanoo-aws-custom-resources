@@ -225,7 +225,7 @@ Resources:
       Code:
         S3Bucket: !Ref DeploymentBucket
         S3Key: !Ref CloudFrontIdentityKey
-      Runtime: nodejs
+      Runtime: nodejs4.3
       Timeout: 60
       VpcConfig:
         SecurityGroupIds:
@@ -283,7 +283,7 @@ Resources:
       Code:
         S3Bucket: !Ref DeploymentBucket
         S3Key: !Ref CognitoIdentityPoolKey
-      Runtime: nodejs
+      Runtime: nodejs4.3
       Timeout: 60
       VpcConfig:
         SecurityGroupIds:
@@ -341,7 +341,7 @@ Resources:
       Code:
         S3Bucket: !Ref DeploymentBucket
         S3Key: !Ref CognitoIdentityPoolRolesKey
-      Runtime: nodejs
+      Runtime: nodejs4.3
       Timeout: 60
       VpcConfig:
         SecurityGroupIds:
@@ -399,7 +399,7 @@ Resources:
       Code:
         S3Bucket: !Ref DeploymentBucket
         S3Key: !Ref CognitoUserPoolKey
-      Runtime: nodejs
+      Runtime: nodejs4.3
       Timeout: 60
       VpcConfig:
         SecurityGroupIds:
@@ -457,7 +457,7 @@ Resources:
       Code:
         S3Bucket: !Ref DeploymentBucket
         S3Key: !Ref CognitoUserPoolClientKey
-      Runtime: nodejs
+      Runtime: nodejs4.3
       Timeout: 60
       VpcConfig:
         SecurityGroupIds:
@@ -515,7 +515,7 @@ Resources:
       Code:
         S3Bucket: !Ref DeploymentBucket
         S3Key: !Ref CognitoUserPoolCustomAttributesKey
-      Runtime: nodejs
+      Runtime: nodejs4.3
       Timeout: 60
       VpcConfig:
         SecurityGroupIds:
@@ -573,7 +573,7 @@ Resources:
       Code:
         S3Bucket: !Ref DeploymentBucket
         S3Key: !Ref DynamoDBItemKey
-      Runtime: nodejs
+      Runtime: nodejs4.3
       Timeout: 60
       VpcConfig:
         SecurityGroupIds:
@@ -631,7 +631,7 @@ Resources:
       Code:
         S3Bucket: !Ref DeploymentBucket
         S3Key: !Ref ElasticTranscoderPipelineKey
-      Runtime: nodejs
+      Runtime: nodejs4.3
       Timeout: 60
       VpcConfig:
         SecurityGroupIds:
@@ -689,7 +689,7 @@ Resources:
       Code:
         S3Bucket: !Ref DeploymentBucket
         S3Key: !Ref ElasticTranscoderPresetKey
-      Runtime: nodejs
+      Runtime: nodejs4.3
       Timeout: 60
       VpcConfig:
         SecurityGroupIds:
@@ -749,7 +749,7 @@ Resources:
       Code:
         S3Bucket: !Ref DeploymentBucket
         S3Key: !Ref S3UploaderKey
-      Runtime: nodejs
+      Runtime: nodejs4.3
       VpcConfig:
         SecurityGroupIds:
           - !Ref ResourceSecurityGroup
@@ -805,7 +805,7 @@ Resources:
       Code:
         S3Bucket: !Ref DeploymentBucket
         S3Key: !Ref PasswordGeneratorKey
-      Runtime: nodejs
+      Runtime: nodejs4.3
       Timeout: 60
       VpcConfig:
         SecurityGroupIds:
@@ -863,7 +863,7 @@ Resources:
       Code:
         S3Bucket: !Ref DeploymentBucket
         S3Key: !Ref SQLRequestKey
-      Runtime: nodejs
+      Runtime: nodejs4.3
       Timeout: 60
       VpcConfig:
         SecurityGroupIds:
@@ -922,7 +922,7 @@ Resources:
       Code:
         S3Bucket: !Ref DeploymentBucket
         S3Key: !Ref Route53HostedZoneDetailsKey
-      Runtime: nodejs
+      Runtime: nodejs4.3
       Timeout: 60
       VpcConfig:
         SecurityGroupIds:
